@@ -1,6 +1,6 @@
 package com.mapzen.tangramcardboard;
 
-import android.app.Activity;
+import android.content.Context;
 import android.opengl.GLSurfaceView;
 
 import com.google.vrtoolkit.cardboard.CardboardView;
@@ -13,8 +13,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 
 public class CardboardMapController extends MapController implements CardboardView.StereoRenderer {
 
-    CardboardMapController(Activity mainApp, GLSurfaceView view, String sceneFilePath) {
-        super(mainApp, view, sceneFilePath);
+    CardboardMapController(Context context, String sceneFilePath) {
+        super(context, sceneFilePath);
     }
 
     @Override

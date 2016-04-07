@@ -6,8 +6,9 @@ import android.util.AttributeSet;
 
 import com.google.vrtoolkit.cardboard.CardboardView;
 import com.mapzen.tangram.ConfigChooser;
+import com.mapzen.tangram.MapView;
 
-public class CardboardMapView extends CardboardView {
+public class CardboardMapView extends MapView {
 
     public CardboardMapView(Context context) {
 
@@ -25,21 +26,28 @@ public class CardboardMapView extends CardboardView {
 
     }
 
-    @Override
-    public void setOnTouchListener(OnTouchListener listener) {
-        // Don't use the tangram-es touch interface
+    GLSurfaceView getSurfaceView() {
+
+        return glSurfaceView;
+
     }
 
     @Override
-    public void setRenderer(GLSurfaceView.Renderer renderer) {
-        setRenderer((StereoRenderer)renderer);
-    }
+    protected void configureGLSurfaceView() {
 
-    private void configureGLSurfaceView() {
-
-        setEGLContextClientVersion(2);
-        setPreserveEGLContextOnPause(true);
-        setEGLConfigChooser(new ConfigChooser(8, 8, 8, 0, 16, 0));
+        glSurfaceView = new CardboardView(getContext()) {
+            @Override
+            public void setOnTouchListener(OnTouchListener listener) {
+                // Don't use the touch interface
+            }
+            @Override
+            public void setRenderer(GLSurfaceView.Renderer renderer) {
+                setRenderer((StereoRenderer)renderer);
+            }
+        };
+        glSurfaceView.setEGLContextClientVersion(2);
+        glSurfaceView.setPreserveEGLContextOnPause(true);
+        glSurfaceView.setEGLConfigChooser(new ConfigChooser(8, 8, 8, 0, 16, 0));
 
     }
 }
