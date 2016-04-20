@@ -1,1 +1,7 @@
+include ':libraries:audio'
+include ':libraries:common'
+include ':libraries:commonwidget'
+include ':libraries:core'
+include ':libraries:panowidget'
+include ':libraries:videowidget'
 include ':app'
