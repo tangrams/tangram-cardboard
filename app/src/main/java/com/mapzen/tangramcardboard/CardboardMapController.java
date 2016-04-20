@@ -1,7 +1,6 @@
 package com.mapzen.tangramcardboard;
 
 import android.content.Context;
-import android.opengl.GLSurfaceView;
 
 import com.google.vrtoolkit.cardboard.CardboardView;
 import com.google.vrtoolkit.cardboard.Eye;
@@ -13,19 +12,28 @@ import javax.microedition.khronos.egl.EGLConfig;
 
 public class CardboardMapController extends MapController implements CardboardView.StereoRenderer {
 
-    CardboardMapController(Context context, String sceneFilePath) {
+    float[] view;
+    float[] perspective;
+
+    public CardboardMapController(Context context, String sceneFilePath, CardboardView view) {
         super(context, sceneFilePath);
+        mapView = view.getGLSurfaceView();
     }
 
     @Override
     public void onNewFrame(HeadTransform headTransform) {
-        // Empty
+
+        view = headTransform.getHeadView();
+        if (view != null && perspective != null) {
+            super.setOverrideMatrices(view, perspective);
+        }
+
     }
 
     @Override
     public void onDrawEye(Eye eye) {
 
-        super.setOverrideMatrices(eye.getEyeView(), eye.getPerspective(1f, 1e4f));
+        perspective = eye.getPerspective(1f, 1e4f);
         super.onDrawFrame(null);
 
     }

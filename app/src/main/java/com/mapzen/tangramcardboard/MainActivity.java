@@ -15,9 +15,7 @@ import java.io.File;
 public class MainActivity extends CardboardActivity {
 
     CardboardMapController mapController;
-    CardboardMapView mapView;
-
-    String tileApiKey = "?api_key=vector-tiles-tyHL4AY";
+    CardboardView view;
 
     int locationIndex = 0;
     LngLat[] locationCoordinates = {
@@ -34,42 +32,23 @@ public class MainActivity extends CardboardActivity {
 
         setContentView(R.layout.main);
 
-        mapView = (CardboardMapView)findViewById(R.id.map);
-        mapController = new CardboardMapController(this, "vr_scene.yaml");
-        mapController.setView(mapView.getSurfaceView());
-        mapView.addView(mapView.getSurfaceView());
-        mapController.setZoom(18);
+        view = (CardboardView)findViewById(R.id.map);
+        mapController = new CardboardMapController(this, "vr_scene.yaml", view);
 
-        goToLocation(locationIndex);
+        view.setRenderer(mapController);
 
-        HttpHandler handler = new HttpHandler() {
-            @Override
-            public boolean onRequest(String url, Callback cb) {
-                url += tileApiKey;
-                return super.onRequest(url, cb);
-            }
-
-            @Override
-            public void onCancel(String url) {
-                url += tileApiKey;
-                super.onCancel(url);
-            }
-        };
-
-        try {
-            File httpCache = new File(getExternalCacheDir().getAbsolutePath() + "/tile_cache");
-            handler.setCache(httpCache, 30 * 1024 * 1024);
-        } catch (Exception e) {
-            e.printStackTrace();
+        HttpHandler handler = new HttpHandler();
+        File cacheDir = getExternalCacheDir();
+        if (cacheDir != null && cacheDir.exists()) {
+            handler.setCache(new File(cacheDir, "tile_cache"), 30 * 1024 * 1024);
         }
 
         mapController.setHttpHandler(handler);
 
-        mapController.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-
-        setCardboardView((CardboardView)mapView.getSurfaceView());
+        setCardboardView(view);
         setConvertTapIntoTrigger(true);
 
+        goToLocation(locationIndex);
     }
 
     @Override
@@ -82,6 +61,7 @@ public class MainActivity extends CardboardActivity {
 
         index %= locationCoordinates.length;
 
+        mapController.setZoom(18);
         mapController.setPosition(locationCoordinates[index]);
 
     }
