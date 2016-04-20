@@ -1,3 +1,6 @@
+global:
+    default_order: function() { return feature.sort_key || 0; }
+
 scene:
     background:
         color: '#8db7d5'
@@ -11,9 +14,8 @@ cameras:
     perspective-camera:
         # Manhattan
         position: [-74.00976419448854, 40.70532700869127, 16]
-        type: perspective #currently ignored
-        focal_length: [[16, 2], [20, 6]] # currently ignored
-        vanishing_point: [-250, -250] # currently ignored
+        type: perspective
+        fov: 45
         active: true
 
 lights:
@@ -23,6 +25,25 @@ lights:
         direction: [1, 1, -1]
         diffuse: [.3, .3, .3, 1.]
         ambient: [0.7, 0.7, 0.7, 1.]
+
+textures:
+    pois:
+        url: img/poi_icons_32.png
+        sprites:
+            plane: [0, 0, 32, 32]
+            tree: [0, 185, 32, 32]
+            sunburst: [0, 629, 32, 32]
+            restaurant: [0, 777, 32, 32]
+            cafe: [0, 814, 32, 32]
+            museum: [0, 518, 32, 32]
+            bar: [0, 887, 32, 32]
+            train: [0, 74, 32, 32]
+            bus: [0, 148, 32, 32]
+            hospital: [0, 444, 32, 32]
+            parking: [0, 1073, 32, 32]
+            info: [0, 1110, 32, 32]
+            hotel: [0, 259, 32, 32]
+            bookstore: [0, 333, 32, 32]
 
 styles:
     flatcolor:
@@ -37,12 +58,17 @@ styles:
     heightglowline:
         base: lines
         mix: heightglow
+    icons:
+        base: points
+        texture: pois
 
 sources:
     osm:
         type: MVT
         url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.mvt
-        max_zoom: 16
+        max_zoom: 18
+        url_params:
+            api_key: vector-tiles-tyHL4AY
 
 layers:
     touch:
@@ -60,6 +86,15 @@ layers:
               polygons:
                 color: magenta
                 order: 40
+        point:
+            filter: { type: point }
+            draw:
+              icons:
+                sprite: sunburst
+                collide: false
+                transition:
+                    [show, hide]:
+                        time: 0s
 
     earth:
         data: { source: osm }
@@ -67,7 +102,6 @@ layers:
             polygons:
                 order: 0
                 color: '#f0ebeb'
-
     landuse:
         data: { source: osm }
         filter:
@@ -123,10 +157,11 @@ layers:
             lines:
                 color: white
                 width: 12.
-                order: 'function() { return feature.sort_key + 5 }'
+                order: 'function() { return feature.sort_key + 5 || 0 }'
                 outline:
                     color: [[16, '#999'], [18, '#aaa']]
-                    width: [[15, 0], [16, 2]]
+                    width: [[10, 0], [16, 2]]
+
         rounded:
             filter: { $zoom: { min: 18 } }
             draw:
@@ -215,7 +250,7 @@ layers:
         draw:
             polygons:
                 style: heightglow
-                order: 50
+                order: global.default_order
                 color: [.65, .65, .63]
         # turn interactive feature selection on for buildings with names
         interactive:
@@ -228,12 +263,11 @@ layers:
             draw:
                 polygons:
                     extrude: true
-            draw:
                 lines:
                     style: heightglowline
                     width: 1.0
                     color: [.75, .75, .73]
-                    order: 52
+                    order: function() { return feature.sort_key + 1 || 0; }
                     extrude: true
         high-line:
             filter: {roof_material: grass}
