@@ -1,6 +1,5 @@
 package com.mapzen.tangramcardboard;
 
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -8,7 +7,6 @@ import com.google.vrtoolkit.cardboard.CardboardActivity;
 import com.google.vrtoolkit.cardboard.CardboardView;
 import com.mapzen.tangram.HttpHandler;
 import com.mapzen.tangram.LngLat;
-import com.squareup.okhttp.Callback;
 
 import java.io.File;
 
