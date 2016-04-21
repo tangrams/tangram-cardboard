@@ -17,10 +17,43 @@ public class MainActivity extends CardboardActivity {
 
     int locationIndex = 0;
     LngLat[] locationCoordinates = {
-            new LngLat(-74.00976419448854, 40.70532700869127), // Manhattan
-            new LngLat(-122.39901, 37.79241), // San Francisco
-            new LngLat(-0.11870, 51.50721), // London
+            new LngLat(-74.01321, 40.70589),    // Begining of broadway
+            new LngLat(-73.99144, 40.73171),    // Begining of broadway
+            new LngLat(-73.98912, 40.74133),    // Begining of broadway
+            new LngLat(-73.98914, 40.74261),    // Flatiron
+            new LngLat(-73.986551, 40.755644),  // Flatiron
+            new LngLat(-73.98628, 40.75576),    // Flatiron
+            new LngLat(-73.985544, 40.757943),  // Flatiron
     };
+
+    int[] locationAnimationDurations = {
+            1500, 15000, 5000, 1000, 3000, 2000, 3000
+    };
+
+    float[] zooms = {
+            18.49f, 20.f, 18.f, 18.f, 17.f, 19.f, 17.f
+    };
+
+    int[] zoomAnimationDurations = {
+            1500, 15000, 5000, 1000, 3000, 2000, 5000
+    };
+
+    double[] tilts = {
+            82.88, 87.53, 82.78, 82.05, 77.48, 85.96, 52.80
+    };
+
+    int[] tiltAnimationDurations = {
+            1500, 15500, 5000, 1000, 3000, 2000, 5000
+    };
+
+    double[] rotations = {
+            327.7184, 327.7184, 351.2359, 352.027, 346.53, 343.42, 163.17
+    };
+
+    int[] rotationAnimationDurations = {
+            1500, 15000, 1500, 1000, 300, 2000, 10000
+    };
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +64,7 @@ public class MainActivity extends CardboardActivity {
         setContentView(R.layout.main);
 
         view = (CardboardView)findViewById(R.id.map);
-        mapController = new CardboardMapController(this, "vr_scene.yaml", view);
+        mapController = new CardboardMapController(this, "gotham.yaml", view);
 
         view.setRenderer(mapController);
 
@@ -59,8 +92,15 @@ public class MainActivity extends CardboardActivity {
 
         index %= locationCoordinates.length;
 
-        mapController.setZoom(18);
-        mapController.setPosition(locationCoordinates[index]);
+        mapController.setPosition(locationCoordinates[index], locationAnimationDurations[index]);
+        mapController.setZoom(zooms[index], zoomAnimationDurations[index]);
+
+        float tiltRadians = (float) (Math.toRadians(tilts[index]));
+        mapController.setTilt(tiltRadians, tiltAnimationDurations[index]);
+
+        float rotationRadians = (float) Math.toRadians(rotations[index]);
+        mapController.setRotation(rotationRadians, rotationAnimationDurations[index]);
+
 
     }
 
