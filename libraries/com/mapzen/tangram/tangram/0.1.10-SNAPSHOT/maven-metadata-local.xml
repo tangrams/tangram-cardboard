@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.mapzen.tangram</groupId>
+  <artifactId>tangram</artifactId>
+  <version>0.1.10-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20160421183947</lastUpdated>
+  </versioning>
+</metadata>
