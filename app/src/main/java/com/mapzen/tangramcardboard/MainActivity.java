@@ -17,6 +17,7 @@ public class MainActivity extends CardboardActivity {
 
     int locationIndex = 0;
     LngLat[] locationCoordinates = {
+            new LngLat(-74.01347, 40.70449),    // Lower manhattan
             new LngLat(-74.01321, 40.70589),    // Begining of broadway
             new LngLat(-73.99144, 40.73171),    // Begining of broadway
             new LngLat(-73.98912, 40.74133),    // Begining of broadway
@@ -27,31 +28,31 @@ public class MainActivity extends CardboardActivity {
     };
 
     int[] locationAnimationDurations = {
-            1500, 15000, 5000, 1000, 3000, 2000, 3000
+            0, 1500, 15000, 5000, 1000, 3000, 2000, 3000
     };
 
     float[] zooms = {
-            18.49f, 20.f, 18.f, 18.f, 17.f, 19.f, 17.f
+            14.f, 18.49f, 20.f, 18.f, 18.f, 17.f, 19.f, 17.f
     };
 
     int[] zoomAnimationDurations = {
-            1500, 15000, 5000, 1000, 3000, 2000, 5000
+            0, 1500, 15000, 5000, 1000, 3000, 2000, 5000
     };
 
     double[] tilts = {
-            82.88, 87.53, 82.78, 82.05, 77.48, 85.96, 52.80
+            0, 82.88, 87.53, 82.78, 82.05, 77.48, 85.96, 52.80
     };
 
     int[] tiltAnimationDurations = {
-            1500, 15500, 5000, 1000, 3000, 2000, 5000
+            0, 1500, 15500, 5000, 1000, 3000, 2000, 5000
     };
 
     double[] rotations = {
-            327.7184, 327.7184, 351.2359, 352.027, 346.53, 343.42, 163.17
+            0, 327.7184, 327.7184, 351.2359, 352.027, 346.53, 343.42, 163.17
     };
 
     int[] rotationAnimationDurations = {
-            1500, 15000, 1500, 1000, 300, 2000, 10000
+            0, 1500, 15000, 1500, 1000, 300, 2000, 10000
     };
 
 
