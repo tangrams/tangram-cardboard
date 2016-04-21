@@ -31,7 +31,7 @@ public class MainActivity extends CardboardActivity {
         setContentView(R.layout.main);
 
         view = (CardboardView)findViewById(R.id.map);
-        mapController = new CardboardMapController(this, "vr_scene.yaml", view);
+        mapController = new CardboardMapController(this, "gotham.yaml", view);
 
         view.setRenderer(mapController);
 
