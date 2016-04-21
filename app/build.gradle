@@ -20,6 +20,9 @@ android {
 }
 
 repositories {
+  flatDir {
+    dirs 'libraries'
+  }
   mavenLocal()
   mavenCentral()
   maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
@@ -30,6 +33,6 @@ dependencies {
   compile project(':libraries:audio')
   compile project(':libraries:common')
   compile project(':libraries:core')
-  compile 'com.android.support:appcompat-v7:23.1.1'
   compile 'com.mapzen.tangram:tangram:0.2-SNAPSHOT'
+  compile 'com.android.support:appcompat-v7:23.1.1'
 }

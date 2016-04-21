@@ -1,3 +1,4 @@
+include ':libraries:tangram'
 include ':libraries:audio'
 include ':libraries:common'
 include ':libraries:commonwidget'
